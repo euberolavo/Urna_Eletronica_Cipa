@@ -1,9 +1,9 @@
-const Atendimento = require('../models/queryApi');
+const Votacao = require('../models/queryApi');
 
 module.exports = (app) => {
   //Cria Rota GET de Membros Geral
   app.get('/membros', (req, res) => {
-    Atendimento.listaAtendimentos(res);
+    Votacao.listaAtendimentos(res);
   });
 
   //Cria Rota GET de membros recebendo parametros de requisição
@@ -11,14 +11,14 @@ module.exports = (app) => {
 
       const id = parseInt(req.params.id)
 
-      Atendimento.buscaMembroPorId(id, res)
+      Votacao.buscaMembroPorId(id, res)
   })
 
   //Cria Rota de cadastro de cargos -------------------------------------------------------------------------------------------------------------
   app.post('/cargos', (req, res) => {
     const cargo = req.body;
 
-    Atendimento.cadastroCargo(cargo, res);
+    Votacao.cadastroCargo(cargo, res);
   });
 
   //Cria Rota de cadastro de ministerios
@@ -26,28 +26,28 @@ module.exports = (app) => {
     const ministerio = req.body;
     const tipo = parseInt(req.body.tipo);
 
-    Atendimento.cadastroMinisterio(ministerio, tipo, res);
+    Votacao.cadastroMinisterio(ministerio, tipo, res);
   });
 
   //Cria Rota de cadastro de GDM
   app.post('/gdm', (req, res) => {
     const gdm = req.body;
 
-    Atendimento.cadastroGdm(gdm, res);
+    Votacao.cadastroGdm(gdm, res);
   });
 
   //Cria Rota de cadastro de GDM
   app.post('/tipoministerio', (req, res) => {
     const tipo = req.body;
 
-    Atendimento.cadastroTipoMinisterio(tipo, res);
+    Votacao.cadastroTipoMinisterio(tipo, res);
   });
 
   //Cria Rota de cadastro de Membro
   app.post('/membros', (req, res) => {
     const membro = req.body;
 
-    Atendimento.cadastroMembro(membro, res);
+    Votacao.cadastroMembro(membro, res);
   });
 
   //Cria Rota de cadastro de Membro em ministerio
@@ -55,7 +55,7 @@ module.exports = (app) => {
     const membro = parseInt(req.body.id_membro);
     const ministerio = parseInt(req.body.id_ministerio);
 
-    Atendimento.cadastroMembroMinisterio(membro, ministerio, res);
+    Votacao.cadastroMembroMinisterio(membro, ministerio, res);
   });
 
   //-----------------------------------------------------------------------------------------
@@ -65,7 +65,7 @@ module.exports = (app) => {
     const id = parseInt(req.params.id);
     const membro = req.body;
 
-    Atendimento.cadastraLiderGdm(id, membro, res);
+    Votacao.cadastraLiderGdm(id, membro, res);
   });
 
   // Faz alteração no lider de ministerios cadastrados
@@ -73,13 +73,13 @@ module.exports = (app) => {
     const id = parseInt(req.params.id);
     const membro = req.body;
 
-    Atendimento.cadastraLiderMinisterio(id, membro, res);
+    Votacao.cadastraLiderMinisterio(id, membro, res);
   });
 
-  // Exclui Atendimento especificado pelo id ------------------------------------------------------------------------------------------------------
+  // Exclui Votacao especificado pelo id ------------------------------------------------------------------------------------------------------
   //   app.delete('/atendimentos/:id', (req, res) => {
   //     const id = parseInt(req.params.id);
 
-  //     Atendimento.deletaAtendimento(id, res);
+  //     Votacao.deletaAtendimento(id, res);
   //   });
 };

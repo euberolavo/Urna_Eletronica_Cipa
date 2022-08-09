@@ -38,7 +38,7 @@ class Tabelas {
 
   criarTurnos() {
     const sql =
-      'CREATE TABLE IF NOT EXISTS turnos(id_turno serial NOT NULL, status_turno BOOLEAN, PRIMARY KEY (id_turno));';
+      'CREATE TABLE IF NOT EXISTS turnos(id_turno serial NOT NULL, nome_turno varchar(40) NOT NULL, status_turno BOOLEAN, PRIMARY KEY (id_turno));';
 
     this.conexao.query(sql, (erro) => {
       if (erro) {

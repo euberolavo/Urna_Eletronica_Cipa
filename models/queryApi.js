@@ -1,7 +1,7 @@
 const conexao = require('../infraestrutura/conexao');
 
-class Atendimento {
-  // Gera Atendimento
+class Votacao {
+  // cadastro de Eleitores
   cadastroCargo(cargo, res) {
     const sql =
       'INSERT INTO cargos(nome_cargo) SELECT x.nome_cargo  FROM (SELECT $1 nome_cargo) x WHERE NOT EXISTS(SELECT 1 FROM cargos c WHERE UPPER (c.nome_cargo) = UPPER (x.nome_cargo))';
@@ -291,4 +291,4 @@ class Atendimento {
   //   });
   // }
 }
-module.exports = new Atendimento();
+module.exports = new Votacao();
