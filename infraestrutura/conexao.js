@@ -4,7 +4,7 @@ const config = {
     host: 'localhost',
     user: 'postgres',     
     password: 'Onco1010',
-    database: 'IEB',
+    database: 'Urna_Cipa',
     port: 5432,
     ssl: false
 };

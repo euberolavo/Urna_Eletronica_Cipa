@@ -2,115 +2,75 @@ class Tabelas {
   init(conexao) {
     this.conexao = conexao;
 
-    this.criarCargos();
-    this.criarGdm();
-    this.criarTiposMinisterios();
-    this.criarMinisterios();
-    this.criarMembros();
-    this.criarMembrosMinisterios();
-    this.criarLiderMinisterio();
-    this.criarLiderGdm();
+    this.criarEleitores();
+    this.criarCandidatos();
+    this.criarTurnos();
+    this.criarVotos();
+    this.criarVotoEleitor();
+
   }
 
-  criarCargos() {
+  criarEleitores() {
     const sql =
-      'CREATE TABLE IF NOT EXISTS cargos(id serial NOT NULL, nome_cargo varchar(20) NOT NULL, PRIMARY KEY (id))';
+      'CREATE TABLE IF NOT EXISTS eleitores (id_eleitor serial NOT NULL, nome_eleitor varchar(40) NOT NULL, cpf_eleitor varchar(20) NOT NULL, matricula_eleitor varchar(10) NOT NULL, PRIMARY KEY (id_eleitor));';
 
     this.conexao.query(sql, (erro) => {
       if (erro) {
         console.log(erro);
       } else {
-        console.log('Tabela Cargos criada com sucesso');
+        console.log('Tabela Eleitores criada com sucesso');
       }
     });
   }
 
-  criarGdm() {
+  criarCandidatos() {
     const sql =
-      'CREATE TABLE IF NOT EXISTS gdm (id serial NOT NULL, nome_gdm varchar(20) NOT NULL, lider_gdm integer, PRIMARY KEY (id))';
+      'CREATE TABLE IF NOT EXISTS candidatos (id_candidato serial NOT NULL, nome_candidato varchar(40) NOT NULL, cpf_candidato varchar(20) NOT NULL,matricula_candidato varchar(20) NOT NULL,numero_candidato varchar(10) NOT NULL,PRIMARY KEY (id_candidato));';
 
     this.conexao.query(sql, (erro) => {
       if (erro) {
         console.log(erro);
       } else {
-        console.log('Tabela Gdm criada com sucesso');
+        console.log('Tabela Candidatos criada com sucesso');
       }
     });
   }
 
-  criarMinisterios() {
+  criarTurnos() {
     const sql =
-      'CREATE TABLE IF NOT EXISTS ministerios (id serial NOT NULL, nome_ministerio varchar(20) NOT NULL, tipo_ministerio integer NOT NULL, lider_ministerio integer, PRIMARY KEY (id),FOREIGN KEY (tipo_ministerio) REFERENCES tipos_ministerio (id))';
+      'CREATE TABLE IF NOT EXISTS turnos(id_turno serial NOT NULL, status_turno BOOLEAN, PRIMARY KEY (id_turno));';
 
     this.conexao.query(sql, (erro) => {
       if (erro) {
         console.log(erro);
       } else {
-        console.log('Tabela Ministerios criada com sucesso');
+        console.log('Tabela Turnos criada com sucesso');
       }
     });
   }
 
-  criarTiposMinisterios() {
+  criarVotos() {
     const sql =
-      'CREATE TABLE IF NOT EXISTS tipos_ministerio (id serial NOT NULL ,tipo varchar(20) NOT NULL,PRIMARY KEY (id))';
+      'CREATE TABLE IF NOT EXISTS votos(id_voto serial NOT NULL, id_candidato integer,id_turno integer,PRIMARY KEY (id_voto),FOREIGN KEY (id_candidato) REFERENCES candidatos (id_candidato),FOREIGN KEY (id_turno) REFERENCES turnos (id_turno));';
 
     this.conexao.query(sql, (erro) => {
       if (erro) {
         console.log(erro);
       } else {
-        console.log('Tabela Tipos Ministerios criada com sucesso');
+        console.log('Tabela Votos criada com sucesso');
       }
     });
   }
 
-  criarMembros() {
+  criarVotoEleitor() {
     const sql =
-      'CREATE TABLE IF NOT EXISTS Membros (id serial NOT NULL , nome varchar(20) NOT NULL,sexo varchar(10) NOT NULL,data_nasc date,estado_civil varchar(10) NOT NULL,cpf char(20),endereço integer,cel char(20),email varchar(30),data_entrada_igreja date,batizado boolean,data_batismo date,cargo integer,gdm integer,PRIMARY KEY (id),FOREIGN KEY (cargo) REFERENCES cargos (id),FOREIGN KEY (ministerio) REFERENCES ministerios (id),FOREIGN KEY (gdm) REFERENCES gdm (id))';
+      'CREATE TABLE IF NOT EXISTS voto_eleitor(id_voto_eleitor serial NOT NULL ,id_eleitor integer,id_turno integer,status_voto_eleitor BOOLEAN,PRIMARY KEY (id_voto_eleitor),FOREIGN KEY (id_eleitor) REFERENCES eleitores (id_eleitor),FOREIGN KEY (id_turno) REFERENCES turnos (id_turno));';
 
     this.conexao.query(sql, (erro) => {
       if (erro) {
         console.log(erro);
       } else {
-        console.log('Tabela Membros criada com sucesso');
-      }
-    });
-  }
-
-  criarMembrosMinisterios() {
-    const sql =
-      'CREATE TABLE IF NOT EXISTS membros_ministerios (id serial NOT NULL , membro integer,ministerio integer,PRIMARY KEY (id),FOREIGN KEY (membro) REFERENCES membros (id),FOREIGN KEY (ministerio) REFERENCES ministerios (id))';
-
-    this.conexao.query(sql, (erro) => {
-      if (erro) {
-        console.log(erro);
-      } else {
-        console.log('Tabela Membros Ministerios criada com sucesso');
-      }
-    });
-  }
-
-  criarLiderGdm() {
-    const sql =
-      'CREATE TABLE IF NOT EXISTS lider_gdm (id serial NOT NULL , membro integer,gdm integer,PRIMARY KEY (id),FOREIGN KEY (membro) REFERENCES membros (id),FOREIGN KEY (gdm) REFERENCES gdm (id))';
-
-    this.conexao.query(sql, (erro) => {
-      if (erro) {
-        console.log(erro);
-      } else {
-        console.log('Tabela Líder GDM criada com sucesso');
-      }
-    });
-  }
-  criarLiderMinisterio() {
-    const sql =
-      'CREATE TABLE IF NOT EXISTS lider_ministerio (id serial NOT NULL , membro integer,ministerio integer,PRIMARY KEY (id),FOREIGN KEY (membro) REFERENCES membros (id),FOREIGN KEY (ministerio) REFERENCES ministerios (id))';
-
-    this.conexao.query(sql, (erro) => {
-      if (erro) {
-        console.log(erro);
-      } else {
-        console.log('Tabela Líder Ministerios criada com sucesso');
+        console.log('Tabela Voto_Eleitor criada com sucesso');
       }
     });
   }
