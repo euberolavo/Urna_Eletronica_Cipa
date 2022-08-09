@@ -3,11 +3,10 @@ class Tabelas {
     this.conexao = conexao;
 
     this.criarEleitores();
-    this.criarCandidatos();
     this.criarTurnos();
+    this.criarCandidatos();
     this.criarVotos();
     this.criarVotoEleitor();
-
   }
 
   criarEleitores() {
@@ -25,7 +24,7 @@ class Tabelas {
 
   criarCandidatos() {
     const sql =
-      'CREATE TABLE IF NOT EXISTS candidatos (id_candidato serial NOT NULL, nome_candidato varchar(40) NOT NULL, cpf_candidato varchar(20) NOT NULL,matricula_candidato varchar(20) NOT NULL,numero_candidato varchar(10) NOT NULL,PRIMARY KEY (id_candidato));';
+      'CREATE TABLE IF NOT EXISTS candidatos (id_candidato serial NOT NULL, nome_candidato varchar(40) NOT NULL, cpf_candidato varchar(20) NOT NULL,matricula_candidato varchar(20) NOT NULL,numero_candidato varchar(10) NOT NULL, id_turno integer, PRIMARY KEY (id_candidato),FOREIGN KEY (id_turno) REFERENCES turnos (id_turno));';
 
     this.conexao.query(sql, (erro) => {
       if (erro) {
