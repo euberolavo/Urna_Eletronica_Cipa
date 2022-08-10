@@ -82,8 +82,8 @@ class Votacao {
 
   // ----------------------------------------------------------------------------------------------------------------------
   // Lista todos os Especialidades Cadastradas
-  listaCandidatos(res) {
-    const sql = 'SELECT * FROM candidatos';
+  listaCandidatos(id, res) {
+    const sql = `select * from candidatos WHERE id_turno = (select id_turno from turnos where id_turno = ${id})`;
 
     conexao.query(sql, (erro, resultados) => {
       if (erro) {
@@ -139,7 +139,7 @@ class Votacao {
   //----------------------------------------------------------------------------------------------------------------------------
   // Altera lider de GDM especificado pelo id
 
-  finalizaTurno(membro, res) {
+  finalizaTurno(turno, res) {
     const sql = `UPDATE public.turnos SET  status_turno = true	WHERE status_turno = false;`;
 
     conexao.query(sql, [], (erro, resultados) => {
@@ -147,11 +147,7 @@ class Votacao {
         res.status(400).json(erro);
       } else {
         if (resultados.rowCount == 0) {
-          res
-            .status(200)
-            .json(
-              'Não há turnos abertos'
-            );
+          res.status(200).json('Não há turnos abertos');
         } else {
           res.status(200).json('Turno finalizado com sucesso');
         }

@@ -7,8 +7,11 @@ module.exports = (app) => {
   });
 
   //Cria Rota GET listando Candidatos
-  app.get('/candidatos', (req, res) => {
-    Votacao.listaCandidatos(res);
+  app.get('/candidatos/:id', (req, res) => {
+
+    const id = parseInt(req.params.id)
+
+    Votacao.listaCandidatos(id,res);
   });
 
   // //Cria Rota GET de membros recebendo parametros de requisição
@@ -61,9 +64,9 @@ module.exports = (app) => {
 
   // Faz alteração no turno, alterando o status
   app.patch('/finalizaturno', (req, res) => {
-    const membro = req.body;
+    const turno = req.body;
 
-    Votacao.finalizaTurno(membro, res);
+    Votacao.finalizaTurno(turno, res);
   });
 
   // // Faz alteração no lider de ministerios cadastrados
