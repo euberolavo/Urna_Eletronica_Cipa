@@ -8,21 +8,20 @@ module.exports = (app) => {
 
   //Cria Rota GET listando Candidatos
   app.get('/candidatos/:id', (req, res) => {
+    const id = parseInt(req.params.id);
 
-    const id = parseInt(req.params.id)
-
-    Votacao.listaCandidatos(id,res);
+    Votacao.listaCandidatos(id, res);
   });
 
-  // //Cria Rota GET de membros recebendo parametros de requisição
-  // app.get('/membro/:id', (req, res) => {
+  //Cria Rota GET listando resultado por turno
+  app.get('/resultado/:id', (req, res) => {
+    const id = parseInt(req.params.id);
 
-  //     const id = parseInt(req.params.id)
-
-  //     Votacao.buscaMembroPorId(id, res)
-  // })
+    Votacao.listaResultados(id, res);
+  });
 
   //------------------------------------------------------------------------------------------------------------------------
+ 
   //Cria Rota de cadastro de Eleitor
   app.post('/eleitor', (req, res) => {
     const eleitor = req.body;
@@ -44,21 +43,12 @@ module.exports = (app) => {
     Votacao.cadastroTurno(turno, res);
   });
 
-  // //Cria Rota de cadastro de ministerios
-  // app.post('/ministerios', (req, res) => {
-  //   const ministerio = req.body;
-  //   const tipo = parseInt(req.body.tipo);
+  //Cria Rota de cadastro de Votos
+  app.post('/voto', (req, res) => {
+    const voto = req.body;
 
-  //   Votacao.cadastroMinisterio(ministerio, tipo, res);
-  // });
-
-  // //Cria Rota de cadastro de Membro em ministerio
-  // app.post('/membrosministerio', (req, res) => {
-  //   const membro = parseInt(req.body.id_membro);
-  //   const ministerio = parseInt(req.body.id_ministerio);
-
-  //   Votacao.cadastroMembroMinisterio(membro, ministerio, res);
-  // });
+    Votacao.validaVoto(voto, res);
+  });
 
   //----------------------------------------------------------------------------------------------------------------------
 
